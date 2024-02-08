@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.db import connection, connections
+
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.contrib.auth.decorators import login_required
+from .models import CustomCharityUser,Donation,Event,Blog
 
 #Login signup and logout is remaining
 
@@ -25,6 +26,33 @@ def complaint(request):
     # return render(request,'complaint.html')
 
 
+
+def create_charity_user(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        email = request.POST.get('email')
+        charity_name = request.POST.get('charity_name')
+        charity_id = request.POST.get('charity_id')
+        charity_address = request.POST.get('charity_address')
+        charity_city = request.POST.get('charity_city')
+        charity_state = request.POST.get('charity_state')
+        charity_zipcode = request.POST.get('charity_zipcode')
+
+        # Create and save the CustomCharityUser object
+        charity_user = CustomCharityUser.objects.create(
+            email=email,
+            charity_name=charity_name,
+            charity_id=charity_id,
+            charity_address=charity_address,
+            charity_city=charity_city,
+            charity_state=charity_state,
+            charity_zipcode=charity_zipcode
+        )
+        return HttpResponse('Charity user created successfully!')
+    else:
+        return HttpResponse('create the charity user ')
+
+
 def ananomuscomplaint(request):
     if request.method == 'POST':
         # data to delete from the database
@@ -40,21 +68,68 @@ def about_us(request):
 
 
 def blogs(request):
-    if request.method == 'POST': # with Condition decorator
-        #whenever a user is logged in then it can edit the blog
-        print('blog editing')
+    if request.method == 'POST': 
+        create_blog(request)
+    
     return HttpResponse('Blog Page')  
     # return render(request,'blogs.html')
+    
+    
+def create_blog(request):
+    # Extract data from the request
+    author_name = request.POST.get('author_name')
+    blog_heading = request.POST.get('blog_heading')
+    blog_description = request.POST.get('blog_description')
+    uploaded_date = request.POST.get('uploaded_date')
 
+    # Create and save the Blog object
+    blog = Blog.objects.create(
+        author_name=author_name,
+        blog_heading=blog_heading,
+        blog_description=blog_description,
+        uploaded_date=uploaded_date
+    )
+    return HttpResponse('Blog created successfully!')
+    
+# views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Event
+
+def create_event(request):
+    # Extract data from the request
+    event_name = request.POST.get('event_name')
+    event_id = request.POST.get('event_id')
+    event_address = request.POST.get('event_address')
+    event_city = request.POST.get('event_city')
+    event_state = request.POST.get('event_state')
+    event_host = request.POST.get('event_host')
+    event_date = request.POST.get('event_date')
+
+    # Create and save the Event object
+    event = Event.objects.create(
+        event_name=event_name,
+        event_id=event_id,
+        event_address=event_address,
+        event_city=event_city,
+        event_state=event_state,
+        event_host=event_host,
+        event_date=event_date
+    )
+    return HttpResponse('Event created successfully!')
+    
 
 def events(request):
     if request.method == 'POST': # with Condition decorator
         # data to write in the database
+        create_event(request)
         # Here we add and store event in database
-        print('Register event ')
-        
+       
+               
     return HttpResponse('Event page')  
     # return render(request,'events.html')
+
+
 
 
 # def upcoming_events(request): #it will include in event view
@@ -74,15 +149,24 @@ def help(request):
     # return render(request,'help.html')
     return HttpResponse('help page')
 
-def donation(request): # with Condition decorator
-    if request.method == 'POST':
-        # data to write in the database
-        # Here er use donation logic
-        
-        print('download donation report')
-       
-    return HttpResponse('see all donation on page')
-    # return render(request,'donation.html')
+
+def donation_details(request):
+    if request.method == 'GET':
+        # Get the logged-in user's charity name
+        if request.user.is_authenticated:
+            charity_user = CustomCharityUser.objects.get(email=request.user.email)
+            charity_name = charity_user.charity_name
+        else:
+            return HttpResponse('User not logged in')
+
+        # Filter donations where charity name and beneficiary name are the same
+        donations = Donation.objects.filter(beneficiary=charity_name)
+
+        # Pass the filtered data to the HTML template
+        return render(request, 'donation_details.html', {'donations': donations})
+    else:
+        return HttpResponse('Invalid request method')
+
 
 
 

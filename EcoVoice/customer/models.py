@@ -15,3 +15,20 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS =['email']
     groups = models.ManyToManyField(Group, related_name='custom_user_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='custom_user_permissions')
+
+
+class Complaint(models.Model):
+    id = models.IntegerField(unique=True,primary_key=True)
+    complint_name = models.CharField(max_length=100, blank=True, null=True)
+    crime_type = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    zipcode = models.IntegerField()
+    crime_date = models.DateField(auto_now=False, auto_now_add=False)
+    description = models.TextField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=100, blank=True, null=True)
+    
+
+
