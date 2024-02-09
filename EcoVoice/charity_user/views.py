@@ -10,8 +10,8 @@ from .models import CustomCharityUser,Donation,Event,Blog
 # Create your views here.
 
 def home(request):
-    # return render(request,'home.html')
-    return HttpResponse('Home Page for Charity')
+    return render(request,'home.html')
+    
     
 @login_required
 def complaint(request):
@@ -71,8 +71,8 @@ def blogs(request):
     if request.method == 'POST': 
         create_blog(request)
     
-    return HttpResponse('Blog Page')  
-    # return render(request,'blogs.html')
+    
+    return render(request,'blogs.html')
     
     
 def create_blog(request):
@@ -90,11 +90,7 @@ def create_blog(request):
         uploaded_date=uploaded_date
     )
     return HttpResponse('Blog created successfully!')
-    
-# views.py
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Event
+
 
 def create_event(request):
     # Extract data from the request
@@ -141,8 +137,8 @@ def news(request):
         #whenever a user is logged in then it can edit the blog
         print('blog editing')
         
-    # return render(request,'news.html')
-    return HttpResponse('News page ')
+    return render(request,'news.html')
+    
 
 def help(request):
     #it provide some of questions and answer 

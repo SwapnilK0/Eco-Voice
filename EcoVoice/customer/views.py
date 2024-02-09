@@ -72,8 +72,8 @@ def blogs(request):
         #whenever a user is logged in then it can edit the blog
         create_blog(request)
         
-    return HttpResponse('Blog Page')  
-    # return render(request,'blogs.html')
+    
+    return render(request,'blogs.html')
 
 def events(request):
     if request.method == 'POST': # with Condition decorator
@@ -92,8 +92,8 @@ def events_registrations(request):
     return HttpResponse('Event registration page')
 
 def news(request):
-    # return render(request,'news.html')
-    return HttpResponse('News page')
+    return render(request,'news.html')
+    
 
 def help(request):
     #it provide some of questions and answer 
@@ -126,8 +126,8 @@ def donation(request): # with Condition decorator
         )
         return HttpResponse('Donation recorded successfully!')
        
-    return HttpResponse('donation page')
-    # return render(request,'donation.html')
+    
+    return render(request,'donation.html')
 
 
 
