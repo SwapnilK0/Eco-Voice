@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-weight: bold;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Create Event</h2>
+  <form action="/create-event/" method="post">
+    {% csrf_token %}
+    <label for="eventName">Event Name:</label><br>
+    <input type="text" id="eventName" name="eventName" required><br>
+    <label for="eventId">Event ID:</label><br>
+    <input type="number" id="eventId" name="eventId" required><br>
+    <label for="eventAddress">Event Address:</label><br>
+    <input type="text" id="eventAddress" name="eventAddress" required><br>
+    <label for="eventCity">Event City:</label><br>
+    <input type="text" id="eventCity" name="eventCity" required><br>
+    <label for="eventState">Event State:</label><br>
+    <input type="text" id="eventState" name="eventState" required><br>
+    <label for="eventDate">Event Date:</label><br>
+    <input type="date" id="eventDate" name="eventDate" required><br>
+    <label for="eventHost">Event Host:</label><br>
+    <input type="text" id="eventHost" name="eventHost" required><br>
+    <button type="submit">Create Event</button>
+  </form>
+</body>
+</html>

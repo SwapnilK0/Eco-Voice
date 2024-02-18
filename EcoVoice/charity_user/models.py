@@ -1,22 +1,27 @@
-from django.contrib.auth.models import AbstractUser, Group , Permission
+from django.contrib.auth.models import AbstractBaseUser, Group , Permission
 from django.db import models
 
-class CustomCharityUser(AbstractUser):
-    email = models.EmailField(unique=True)
+class CustomCharityUser(AbstractBaseUser):
+    email = models.EmailField()
     
     # Additional fields for complaint filing
-    charity_name = models.CharField(max_length=255)
-    charity_id = models.CharField(max_length=15, unique=True)
-    charity_address = models.TextField(max_length=100)
-    charity_city = models.CharField(max_length=20)
-    charity_state = models.CharField(max_length=20)
-    charity_zipcode = models.CharField(max_length=10)
+    charity_name = models.CharField(max_length=255, blank=True ,null=True)
+    charity_id = models.CharField(max_length=15, unique=True, blank=True, null=True)
+    charity_address = models.TextField(max_length=100, blank=True, null=True)
+    charity_city = models.CharField(max_length=20, blank=True, null=True)
+    charity_state = models.CharField(max_length=20, blank=True, null=True)
+    charity_zipcode = models.CharField(max_length=10, blank=True, null=True)
     
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS =['']
     groups = models.ManyToManyField(Group, related_name='charity_user_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='charity_user_permissions')
 
+class Profile(models.Model):
+    user = models.OneToOneField(CustomCharityUser, on_delete=models.CASCADE)
+    email_token= models.CharField(max_length=100)
+    is_verified = models.BooleanField(default=False)
+    
 
 class Event(models.Model):
     event_name = models.CharField(max_length=100)
@@ -31,11 +36,11 @@ class Event(models.Model):
     
 class Blog(models.Model):
     
-    authour_name = models.CharField(max_length=100)
+    author_name = models.CharField(max_length=100)
     # + blog_type : text
     blog_heading = models.CharField(max_length=100)
-    blog_discreption = models.TextField()
-    uploded_date = models.DateField(auto_now=False, auto_now_add=False)
+    blog_description = models.TextField()
+    uploaded_date = models.DateField(auto_now=False, auto_now_add=False)
     
 class Donation(models.Model):
     donation_id =  models.CharField(max_length=100)

@@ -9,8 +9,35 @@ from charity_user.models import Donation
 
 # Create your views here.
  
+def user_signup(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        email = request.POST.get('email')
+        charity_name = request.POST.get('charity_name')
+        charity_id = request.POST.get('charity_id')
+        charity_address = request.POST.get('charity_address')
+        charity_city = request.POST.get('charity_city')
+        charity_state = request.POST.get('charity_state')
+        charity_zipcode = request.POST.get('charity_zipcode')
+
+        # Create and save the CustomCharityUser object
+        customer_user = CustomUser.objects.create(
+            email=email,
+            charity_name=charity_name,
+            charity_id=charity_id,
+            charity_address=charity_address,
+            charity_city=charity_city,
+            charity_state=charity_state,
+            charity_zipcode=charity_zipcode
+        )
+        return HttpResponse('Charity user created successfully!')
+    else:
+        return HttpResponse('create the charity user ')
+
+ 
+ 
 def home(request):
-    return render(request,'homepage.html')
+    return render(request,'User/home.html')
     
 
 def complaint(request):
@@ -48,8 +75,8 @@ def complaint(request):
         )
         complaint.save()
         
-    # return render(request,'complaint.html')
-    return HttpResponse('File a Compliant here')
+    return render(request,'complaint.html')
+    # return HttpResponse('File a Compliant here')
 
 
 
@@ -64,33 +91,35 @@ def ananomuscomplaint(request):
     # return render(request,'ananomuscomplaint.html')
 
 def about_us(request):
-    # return render(request,'about_us.html')
-    return HttpResponse('here is about page') 
+    return render(request,'User/about.html')
+    # return HttpResponse('here is about page') 
 
 def blogs(request):
+    return render(request,'User/blogs.html')
+
+def write_blog(request):
     if request.method == 'POST': # with Condition decorator
         #whenever a user is logged in then it can edit the blog
         create_blog(request)
+    return render(request,'write_bolg.html')
         
     
-    return render(request,'blogs.html')
-
 def events(request):
-    if request.method == 'POST': # with Condition decorator
-        # data to write in the database
-        # Here er use Ai model for image classification and store it in database
-        print('Registration of event ')
-    return HttpResponse('Event page')  
-    # return render(request,'events.html')
+
+    return render(request,'display_event.html')
 
 # def upcoming_events(request): #it will include in event view
 #     return render(request,'upcoming_events.html')
 
 
 def events_registrations(request):
-    # return render(request,'events_registrations.html')
-    return HttpResponse('Event registration page')
-
+    if request.method == 'POST': # with Condition decorator
+        # data to write in the database
+        # Here er use Ai model for image classification and store it in database
+            print('Registration of event ')
+     
+    return render(request,'events_registration.html')
+    
 def news(request):
     return render(request,'news.html')
     

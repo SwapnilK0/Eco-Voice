@@ -1,0 +1,163 @@
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ECO-voice</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- font awesome cdn -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- fonts -->
+        <link rel = "stylesheet" href = "/static/font/fonts.css">
+        <!-- normalize css -->
+        <link rel = "stylesheet" href = "/static/css/normalize.css">
+        <!-- custom css -->
+        <link rel = "stylesheet" href = "/static/css/utility.css">
+        <link rel = "stylesheet" href = "/static/css/style.css">
+        <link rel = "stylesheet" href = "/static/css/responsive.css">
+    </head>
+    <body>
+        
+        <!-- navbar  -->
+        <nav class = "navbar">
+            <div class = "container flex">
+                <a href = "home" class = "site-brand">
+                    ECO<span>voice</span>
+                </a>
+
+                <button type = "button" id = "navbar-show-btn" class = "flex">
+                    <i class = "fas fa-bars"></i>
+                </button>
+                <div id = "navbar-collapse">
+                    <button type = "button" id = "navbar-close-btn" class = "flex">
+                        <i class = "fas fa-times"></i>
+                    </button>
+                    <ul class = "navbar-nav">
+                        <li class = "nav-item">
+                            <a href = "home" class = "nav-link">Home</a>
+                        </li>
+                        
+                        <li class = "nav-item">
+                            <a href = "display_complaints" class = "nav-link">View Complaint</a>
+                        </li>
+                        
+                        <li class = "nav-item">
+                            <a href = "events" class = "nav-link">Events</a>
+                        </li>
+
+                        <li class = "nav-item">
+                            <a href = "display_donation" class = "nav-link">View Donation</a>
+                        </li>
+
+                        <li class = "nav-item">
+                            <a href = "blogs" class = "nav-link">Blog</a>
+                        </li>
+                        <li class = "nav-item">
+                            <a href = "about" class = "nav-link">About</a>
+                        </li>
+                        
+                        <li class = "nav-item">
+                            <a href = "donation" class = "nav-link">Donate</a>
+                        </li>
+                        <li class = "nav-item">
+                            <img src = "./static/images/profile.png" alt = "featured place">
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            {% if messages %}
+              {% for message in  messages %}
+      
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                 {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+        </div>
+
+         <!-- end of navbar  -->
+                 <!-- header -->
+        <header class = "flex">
+            {% block head %}
+      
+            {% endblock head %} 
+           
+        </header>
+        <!-- header -->
+      {% block body %}
+      
+      {% endblock body %} 
+       
+
+        <!-- footer -->
+        <footer class = "py-4">
+            <div class = "container footer-row">
+                <div class = "footer-item">
+                    <a href = "index.html" class = "site-brand">
+                        ECO<span>voice</span>
+                    </a>
+                    <p class = "text">Eco Voice is a website that has features such as filing complaints, donating money, and sharing blogs. Users can file complaints online for any environmental abuse happening in their vicinity or surrounding areas. Users can also donate money to certain organizations that play a major role in environmental activities. Users can also share their experiences and learn from each other in the blogs section.</p>
+                </div>
+
+                <div class = "footer-item">
+                    <h2>Follow us on: </h2>
+                    <ul class = "social-links">
+                        <li>
+                            <a href = "#">
+                                <i class = "fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href = "#">
+                                <i class = "fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href = "#">
+                                <i class = "fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href = "#">
+                                <i class = "fab fa-pinterest"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href = "#">
+                                <i class = "fab fa-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class = "footer-item">
+                    <h2>Currently Active in </h2>
+                    <ul>
+                        <li><a href = "#">Thailand</a></li>
+                        <li><a href = "#">Australia</a></li>
+                        <li><a href = "#">Inida</a></li>
+                        <li><a href = "#">Switzerland</a></li>
+                        <li><a href = "#">Germany</a></li>
+                    </ul>
+                </div>
+
+                <div class = "subscribe-form footer-item">
+                    <h2>Sign Up </h2>
+                    <h4>And become the Part of ECO-voice!</h4>
+                    <form class = "flex">
+                        <input type = "email" placeholder="Enter Email" class = "form-control">
+                        <input type = "submit" class = "btn" value = "Subscribe">
+                    </form>
+                </div>
+            </div>
+        </footer>
+        <!-- end of footer -->
+       
+    </body>
+</html>
