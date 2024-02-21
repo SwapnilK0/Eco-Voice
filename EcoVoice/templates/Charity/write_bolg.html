@@ -54,7 +54,7 @@
 </head>
 <body>
   <h2>Create Blog Entry</h2>
-  <form action="" method="POST">
+  <form action="/write_blog" method="POST">
     {% csrf_token %}
     <label for="author_name">Author Name:</label>
     <input type="text" id="author_name" name="author_name" required>

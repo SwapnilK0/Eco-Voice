@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
-from django.contrib.auth import authenticate,login,logout,get_user_model
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from .models import CustomCharityUser,Donation,Event,Blog,Profile
 from .utils import * 
@@ -12,27 +12,37 @@ import uuid
 # Create your views here.
 
 
-def charity_login(request) :
+def user_login(request) :
     if request.method == 'POST':
 
         email= request.POST.get('email')
         password= request.POST.get('password')
+        
         user = authenticate(request, username=email, password=password)
-
+        print(user)
         if user is not None:
             login(request, user)
             # messages.success(request, ("Successfully Login") )
-            return HttpResponse('Successfully Login')
+            return redirect('home')
         else:
             return HttpResponse('Unsuccessfully Login') 
-            
+             
 
-    return render(request,'charity_login.html')
+    return render(request,'Charity/login.html')
+
+
+@login_required(login_url='login')
+def user_logout(request) :
+    logout(request)
+    # messages.success(request, ("Successfully Logout") )
+    return redirect('home')
+
 
 def home(request):
+    
     return render(request,'Charity/charity_home.html')
     
-    
+@login_required(login_url='login')
 def display_complaint(request):
     if request.method == 'POST':
         # data to delete from the database
@@ -44,62 +54,64 @@ def display_complaint(request):
 
 
 
-def create_charity_user(request):
+def signup(request):
     if request.method == 'POST':
         # Extract data from the request
         email = request.POST.get('email')
-        
         password = request.POST.get('password')
-
+        
         # Create and save the CustomCharityUser object
-        charity_user = CustomCharityUser.objects.create(email=email,)
-        charity_user.set_password(password)
-        p_obj = Profile.objects.create(
-            user=charity_user,
-            email_token = str(uuid.uuid4())
-                                       
-        )
-        send_email_token(email, p_obj.email_token)
-       
-        return HttpResponse('Verification is send successfully!')
-       
+        
+        if AuthUser.objects.filter(username=email).exists():
+            # messages.success(request, ("User is Already Exist") )
+            return redirect('signup')
+        else:
+            charity_user=AuthUser.objects.create_user(username=email,password=password)
             
+            p_obj = Profile.objects.create(
+                user=charity_user,
+                email_token = str(uuid.uuid4())
+                                        
+            )
+            send_email_token(email, p_obj.email_token)
+       
+            return HttpResponse('Verification is send successfully!')
+        
     else:
-        return render(request,'Charity/signup_charity.html')
+        return render(request,'Charity/signup.html')
 
 
 
 def verify(request, token):
+
     # try:
         obj = Profile.objects.filter(email_token=token).first()
+       
         if obj:
             obj.is_verified = True
             obj.save()
-            
-            return redirect('edit_info.html')
+            return redirect('login')
         else :
             return HttpResponse('invalid!')
-            
-        
+
     # except Exception as e:
     #     return HttpResponse('The link is invalid or broken!')
 
-
+@login_required(login_url='login')
 def edit_info():
     if request.method == 'POST':
         # Extract data from the request
+        email = request.user.email
         charity_name = request.POST.get('charity_name')
         charity_id = request.POST.get('charity_id')
         charity_address = request.POST.get('charity_address')
         charity_city = request.POST.get('charity_city')
         charity_state = request.POST.get('charity_state')
         charity_zipcode = request.POST.get('charity_zipcode')
-        password = request.POST.get('password')
+        
 
         # Create and save the CustomCharityUser object
-        charity_user = CustomCharityUser.objects.create(
-            password=password,
-            email=email,
+        CustomCharityUser.objects.filter(email=email).update(
             charity_name=charity_name,
             charity_id=charity_id,
             charity_address=charity_address,
@@ -109,8 +121,9 @@ def edit_info():
         )
         return HttpResponse('Charity user info edited successfully!') 
     # return render(request,'edit_info.html', {details:'details'})
-    # return render(request,'edit_info.html')
-    return HttpResponse('Charity user info edited successfully!') 
+    
+    return render(request,'edit_info.html')
+    # return HttpResponse('Charity user info edited successfully!') 
     
 
 
@@ -122,13 +135,11 @@ def about(request):
 
 
 def blogs(request):
-    if request.method == 'POST': 
-        create_blog(request)
-    
     
     return render(request,'Charity/blogs.html')
-    
-    
+
+
+@login_required(login_url='login')
 def create_blog(request):
     # Extract data from the request
     author_name = request.POST.get('author_name')
@@ -143,9 +154,10 @@ def create_blog(request):
         blog_description=blog_description,
         uploaded_date=uploaded_date
     )
-    return HttpResponse('Blog created successfully!')
+    return redirect('/blog')
 
 
+@login_required(login_url='login')
 def create_event(request):
     # Extract data from the request
     event_name = request.POST.get('event_name')
@@ -189,12 +201,15 @@ def news(request):
     return render(request,'Charity/news.html')
     
 
+
+
 def help(request):
     #it provide some of questions and answer 
     # return render(request,'help.html')
     return HttpResponse('help page')
 
 
+@login_required(login_url='login')
 def donation_details(request):
     if request.method == 'GET':
         # Get the logged-in user's charity name

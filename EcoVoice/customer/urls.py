@@ -1,28 +1,32 @@
 
 from django.contrib import admin
 from django.urls import path
-from . import views
+from charity_user import views as c_views
+from .views import *
+
 
 
 urlpatterns = [
     # path('admin/', admin.site.urls),#just for testing purposes at last delete it when project is done 
-    path('', views.home, name='home'),
-    # path('user_logout', views.user_logout, name='user_logout'),
-    # path('user_login', views.user_login, name='user_login'),
-    path('user_signup', views.user_signup, name='user_signup'),
+    path('', home, name='home'),
+    path('logout', user_logout, name='logout'),
+    path('login', user_login, name='login'),
+    path('signup', c_views.signup, name='signup'),
+    path('verify/<token>', c_views.verify, name='verify'), #charity logout
+    path('edit_info', edit_info, name='edit_info'),
 
-    path('home', views.home, name='home'),
-    path('complaint', views.complaint, name='complaint'),   
-    path('ananomuscomplaint', views.ananomuscomplaint, name='ananomuscomplaint'),   
-    path('blogs', views.blogs, name='blogs'),
-    path('write_blog', views.write_blog, name='write_blog'),
-    path('about', views.about_us, name='about_us'),
-    path('events', views.events, name='events'),
-    path('events_registrations', views.events_registrations, name='events_registrations'),
-    # path('upcoming_events', views.upcoming_events, name='upcoming_events'),
-    path('help', views.help, name='help'),
-    path('news', views.news, name='news'),
-    path('donation', views.donation, name='donation'),
+    path('home', home, name='home'),
+    path('complaint', complaint, name='complaint'),   
+    path('ananomuscomplaint', ananomuscomplaint, name='ananomuscomplaint'),   
+    path('blogs', blogs, name='blogs'),
+    path('write_blog', write_blog, name='write_blog'),
+    path('about', about_us, name='about_us'),
+    path('display_events', events, name='events'),
+    path('events_registrations', events_registrations, name='events_registrations'),
+    # path('upcoming_events', upcoming_events, name='upcoming_events'),
+    path('help', help, name='help'),
+    path('news', news, name='news'),
+    path('donation', donation, name='donation'),
     
     
 ]

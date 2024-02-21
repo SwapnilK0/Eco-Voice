@@ -1,0 +1,27 @@
+{%extends './base.html'%}
+{%block body%}
+  <h2>Charity User Signup</h2>
+  <form action="signup" method="post">
+    {% csrf_token %}
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    {% comment %} <label for="charity_name">Charity Name:</label><br>
+    <input type="text" id="charity_name" name="charity_name" required><br>
+    <label for="charity_id">Charity ID:</label><br>
+    <input type="text" id="charity_id" name="charity_id" required><br>
+    <label for="charity_address">Charity Address:</label><br>
+    <textarea id="charity_address" name="charity_address" required></textarea><br>
+    <label for="charity_city">Charity City:</label><br>
+    <input type="text" id="charity_city" name="charity_city" required><br>
+    <label for="charity_state">Charity State:</label><br>
+    <input type="text" id="charity_state" name="charity_state" required><br>
+    <label for="charity_zipcode">Charity Zipcode:</label><br>
+    <input type="text" id="charity_zipcode" name="charity_zipcode" required><br>
+     {% endcomment %}
+     <label for="password">Password:</label><br>
+     <input type="password" id="password" name="password" required><br>
+     
+    
+    <button type="submit">Sign Up</button>
+  </form>
+{%endblock%}

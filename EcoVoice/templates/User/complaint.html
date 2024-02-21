@@ -1,0 +1,64 @@
+{% extends './base.html'%}
+{%block head%}
+{% comment %} <link rel="stylesheet" href="/static/css/complaint_style.css" /> {% endcomment %}
+<header></header>
+
+{%endblock head%}
+{% block body%}
+
+    <section>
+      
+      <form action="/complaint" method="post">
+        {% csrf_token %}
+        <div>
+          <label>Complain Name</label>
+          <input type="text" name="complint_name" placeholder="Enter Complain name" required />
+        </div>
+        <br>
+
+        <div>
+          <select>
+            <option hidden>Crime type</option>
+            <option>Animal Abuse</option>
+            <option>Illegal Deforestation</option>
+            <option>Plastic Litttering</option>
+          </select>
+        </div>
+        <br>
+
+        <div class="column">
+          <div>
+            <label>Date of Incident</label>
+            <input type="date" name="crime_date" placeholder="Enter birth date" required />
+          </div>
+        </div>
+<br>
+        <div class="input-box address">
+          <label>Address of Incident</label>
+          <input type="text" name="address" placeholder="Enter street address" required />
+          <input type="text" placeholder="Enter street address line 2" required />
+          <div class="column">
+            <div>
+              <select name="country">
+                <option hidden>Country</option>
+                <option>Thailand</option>
+                <option>Australia</option>
+                <option>India</option>
+                <option>Switzerland</option>
+                <option>Germany</option>
+              </select>
+            </div>
+            <input type="text" name="city" placeholder="Enter your city" required />
+          </div>
+          <div class="column">
+            <input type="text" name="state" placeholder="Enter your State" required />
+            <input type="number" name+"zipcode" placeholder="Enter postal code" required />
+          </div>
+        </div>
+        <button>Submit</button>
+      </form>
+    </section>
+    <br>
+    <br>
+
+{%endblock body%}

@@ -1,28 +1,59 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.contrib.auth.decorators import login_required
-from customer.models import Complaint
+from customer.models import *
 from charity_user.views import create_blog
-from charity_user.models import Donation
+from charity_user.models import *
+from charity_user.utils import * 
+from .manager import *
+import uuid
+
 #Login signup and logout is remaining
 
-# Create your views here.
- 
-def user_signup(request):
+def user_login(request) :
+    if request.method == 'POST':
+
+        email= request.POST.get('email')
+        password= request.POST.get('password')
+        
+        user = authenticate(request, username=email, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            # messages.success(request, ("Successfully Login") )
+            return redirect('/home')
+        else:
+            return HttpResponse('Unsuccessfully Login') 
+             
+
+    return render(request,'User/login.html')
+
+
+@login_required(login_url='/login')
+def user_logout(request) :
+    logout(request)
+    # messages.success(request, ("Successfully Logout") )
+    return redirect('/home')
+
+
+
+# @login_required(login_url='login')
+def edit_info(request):
     if request.method == 'POST':
         # Extract data from the request
-        email = request.POST.get('email')
+        email = request.user.username
         charity_name = request.POST.get('charity_name')
         charity_id = request.POST.get('charity_id')
         charity_address = request.POST.get('charity_address')
         charity_city = request.POST.get('charity_city')
         charity_state = request.POST.get('charity_state')
         charity_zipcode = request.POST.get('charity_zipcode')
+        
 
         # Create and save the CustomCharityUser object
-        customer_user = CustomUser.objects.create(
-            email=email,
+        CustomCharityUser.objects.filter(email=email).update(
             charity_name=charity_name,
             charity_id=charity_id,
             charity_address=charity_address,
@@ -30,21 +61,27 @@ def user_signup(request):
             charity_state=charity_state,
             charity_zipcode=charity_zipcode
         )
-        return HttpResponse('Charity user created successfully!')
-    else:
-        return HttpResponse('create the charity user ')
+        return HttpResponse('Charity user info edited successfully!') 
+    # return render(request,'edit_info.html', {details:'details'})
+    
+    return render(request,'User\edit_info.html')
+    # return HttpResponse('Charity user info edited successfully!') 
+    
 
- 
+
+
  
 def home(request):
     return render(request,'User/home.html')
     
 
+@login_required(login_url='/login')
 def complaint(request):
     if request.method == 'POST':
         # data to write in the database
         # Here er use Ai model for image classification and store it in database
-        complaint_name = request.POST.get('complaint_name')
+        
+        complint_name = request.POST.get('complaint_name')
         crime_type = request.POST.get('crime_type')
         address = request.POST.get('address')
         city = request.POST.get('city')
@@ -53,16 +90,17 @@ def complaint(request):
         zipcode = request.POST.get('zipcode')
         crime_date = request.POST.get('crime_date')
         description = request.POST.get('description')
-        status = request.POST.get('status')
+        
 
         # Create and save the CustomUser object if necessary
         # (Assuming the user is logged in and their ID is available in request.user.id)
-        custom_user_id = request.user.id
-        CustomUser.objects.get(id=custom_user_id)
+        
+        
 
         # Create and save the Complaint object
         complaint = Complaint(
-            complaint_name=complaint_name,
+            complint_name=complint_name,
+            user = request.user,
             crime_type=crime_type,
             address=address,
             city=city,
@@ -71,24 +109,22 @@ def complaint(request):
             zipcode=zipcode,
             crime_date=crime_date,
             description=description,
-            status=status
+            status="Under checking"
         )
         complaint.save()
         
-    return render(request,'complaint.html')
+    return render(request,'User/complaint.html')
     # return HttpResponse('File a Compliant here')
 
 
 
+@login_required(login_url='/login')
 def ananomuscomplaint(request):
     if request.method == 'POST':
-        # data to write in the database
-        # Here er use Ai model for image classification and store it in database
-       
-        print('complint')
+        complaint(request)
     
-    return HttpResponse('File a Ananomus Compliant here') 
-    # return render(request,'ananomuscomplaint.html')
+    # return HttpResponse('File a Ananomus Compliant here') 
+    return render(request,'User/complaint.html')
 
 def about_us(request):
     return render(request,'User/about.html')
@@ -97,11 +133,13 @@ def about_us(request):
 def blogs(request):
     return render(request,'User/blogs.html')
 
+
+@login_required(login_url='/login')
 def write_blog(request):
     if request.method == 'POST': # with Condition decorator
         #whenever a user is logged in then it can edit the blog
         create_blog(request)
-    return render(request,'write_bolg.html')
+    return render(request,'User/write_bolg.html')
         
     
 def events(request):
@@ -112,6 +150,7 @@ def events(request):
 #     return render(request,'upcoming_events.html')
 
 
+@login_required(login_url='/login')
 def events_registrations(request):
     if request.method == 'POST': # with Condition decorator
         # data to write in the database

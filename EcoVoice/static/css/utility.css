@@ -20,6 +20,8 @@ button, input[type = "submit"]{
     max-width: 1320px;
     padding: 0 1rem;
     margin: 0 auto;
+    position: relative;
+    display: block;
 }
 .flex{
     display: -webkit-box;
@@ -51,6 +53,9 @@ button, input[type = "submit"]{
     background-color: transparent;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+}
+.form{
+    position: relative;
 }
 .btn{
     padding: 0.7rem 2.4rem;

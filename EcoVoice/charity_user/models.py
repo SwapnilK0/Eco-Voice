@@ -1,8 +1,13 @@
 from django.contrib.auth.models import AbstractBaseUser, Group , Permission
 from django.db import models
 
+from django.contrib.auth.models import User as AuthUser
+from .manager import CustomUserManager
+
+
 class CustomCharityUser(AbstractBaseUser):
-    email = models.EmailField()
+    
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, null=True, blank=True)
     
     # Additional fields for complaint filing
     charity_name = models.CharField(max_length=255, blank=True ,null=True)
@@ -12,13 +17,15 @@ class CustomCharityUser(AbstractBaseUser):
     charity_state = models.CharField(max_length=20, blank=True, null=True)
     charity_zipcode = models.CharField(max_length=10, blank=True, null=True)
     
+    objects=CustomUserManager()
+    
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS =['']
     groups = models.ManyToManyField(Group, related_name='charity_user_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='charity_user_permissions')
 
 class Profile(models.Model):
-    user = models.OneToOneField(CustomCharityUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
     email_token= models.CharField(max_length=100)
     is_verified = models.BooleanField(default=False)
     
@@ -51,4 +58,4 @@ class Donation(models.Model):
     trancaction_method= models.CharField(max_length=100)
 
 
-
+#manager

@@ -7,12 +7,12 @@ from . import views
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.home, name='home'),#it is different from basic home
-    # path('user_logout', views.user_logout, name='user_logout'), #charity login
-    path('charity_login', views.charity_login, name='charity_login'), #charity logout
+    path('logout', views.user_logout, name='logout'), #charity login
+    path('login', views.user_login, name='login'), #charity logout
     path('verify/<token>', views.verify, name='verify'), #charity logout
-    # path('user_signup', views.user_signup, name='user_signup'), #charity signup wiyh validation
+    path('signup', views.signup, name='signup'), #charity signup wiyh validation
     path('edit_info', views.edit_info, name='edit_info'),
-    path('create_charity_user', views.create_charity_user, name='create_charity_user'),
+    # path('create_charity_user', views.create_charity_user, name='create_charity_user'),
     path('home', views.home, name='home'), #it is different from basic home 
     path('display_complaint', views.display_complaint, name='display_complaint'),  #Show the all compliant
     path('blogs', views.blogs, name='blogs'),#edit te blog here

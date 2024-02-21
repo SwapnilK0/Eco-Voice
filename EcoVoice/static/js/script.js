@@ -36,3 +36,8 @@ window.addEventListener('resize', () => {
         document.body.classList.remove("resize-animation-stopper");
     }, 400);
 });
+
+let subMenu = document.getElementById('subMenu');
+function toogelMenu(){
+    subMenu.classList.toggle('open-menu');
+}

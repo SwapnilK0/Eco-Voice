@@ -1,16 +1,21 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, Group, Permission
 from django.db import models
+from django.contrib.auth.models import User as AuthUser
+from .manager import CustomUserManager
 
-class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)
-    
+
+class CustomUser(AbstractBaseUser):
+     
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, null=True, blank=True)
+   
     # Additional fields for complaint filing
     full_name = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=True)
     city = models.CharField(max_length=20, blank=True)
     state = models.CharField(max_length=20, blank=True)
     zipcode = models.CharField(max_length=10, blank=True)
-    
+  
+    objects=CustomUserManager()   
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS =['email']
     groups = models.ManyToManyField(Group, related_name='custom_user_groups')
@@ -18,7 +23,8 @@ class CustomUser(AbstractUser):
 
 
 class Complaint(models.Model):
-    id = models.IntegerField(unique=True,primary_key=True)
+    
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, null=True, blank=True)  
     complint_name = models.CharField(max_length=100, blank=True)
     crime_type = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=100, blank=True)
@@ -29,6 +35,5 @@ class Complaint(models.Model):
     crime_date = models.DateField(auto_now=False, auto_now_add=False)
     description = models.TextField(max_length=100, blank=True)
     status = models.CharField(max_length=100, blank=True)
+
     
-
-
