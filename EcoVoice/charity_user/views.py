@@ -98,14 +98,15 @@ def verify(request, token):
     #     return HttpResponse('The link is invalid or broken!')
 
 @login_required(login_url='login')
-def edit_info():
+def edit_info(request):
     if request.method == 'POST':
         # Extract data from the request
-        email = request.user.email
+        email = request.user.username
         charity_name = request.POST.get('charity_name')
         charity_id = request.POST.get('charity_id')
         charity_address = request.POST.get('charity_address')
         charity_city = request.POST.get('charity_city')
+        charity_country = request.POST.get('charity_country')
         charity_state = request.POST.get('charity_state')
         charity_zipcode = request.POST.get('charity_zipcode')
         
@@ -114,6 +115,7 @@ def edit_info():
         CustomCharityUser.objects.filter(email=email).update(
             charity_name=charity_name,
             charity_id=charity_id,
+            charity_country = charity_country,
             charity_address=charity_address,
             charity_city=charity_city,
             charity_state=charity_state,
@@ -122,7 +124,7 @@ def edit_info():
         return HttpResponse('Charity user info edited successfully!') 
     # return render(request,'edit_info.html', {details:'details'})
     
-    return render(request,'edit_info.html')
+    return render(request,'Charity/edit_info.html')
     # return HttpResponse('Charity user info edited successfully!') 
     
 

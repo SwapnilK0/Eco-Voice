@@ -18,7 +18,8 @@
         <link rel = "stylesheet" href = "/static/css/responsive.css">
     </head>
     <body>
-        
+          
+       
         <!-- navbar  -->
         <nav class = "navbar">
             <div class = "container flex">
@@ -54,22 +55,29 @@
                         <li class = "nav-item">
                             <a href = "about" class = "nav-link">About</a>
                         </li>
-                       
-                        {%if request.user.is_authenticated %}
-                        <span class = "nav-item">Login as {{request.user.email}}</span>
-                        <li class = "nav-item">
-                            <a href = "/logout" class = "nav-link">logout</a>
-                        </li>
-                        {% else %}
-
-                        <li class = "nav-item">
-                            <a href = "/login" class = "nav-link">Login</a>
-                        </li>
-                        {%endif%}
-
-                        <li class = "nav-item">
-                            <a href = "signup" class = "nav-link">signup</a>
-                        </li>
+                        <div class="profile-pic">
+                            <img src="/static/images/user.jpeg" class="user-pic" onclick="toggleMenu()">
+                         </div>
+                         <div class="sub-menu-wrap" id="subMenu">
+                            <div class="sub-menu">
+                                <div class="user-info">
+                                
+                                {%if request.user.is_authenticated %}
+                                <center><img src="/static/images/user.jpeg" class="user-pic2"></center>
+                                <h2>{{ user.username}}</h2>
+                                <hr>
+                                <a href = "edit_info" class = "sub-menu-link">Edit profile ></a><br>
+                                <a href = "help" class = "sub-menu-link">Help & support ></a><br>   
+                               
+                               
+                                <a href = "logout" class = "sub-menu-link">Logout</a>
+                                {% else %}
+                                <a href = "login" class = "sub-menu-link">Login</a>
+                                {%endif%}  
+                               
+                                </div>
+                            </div>
+                        </div>
                         
                     </ul>
                 </div>
@@ -90,12 +98,12 @@
 
          <!-- end of navbar  -->
                  <!-- header -->
-        <header class = "flex">
+        
             {% block head %}
       
             {% endblock head %} 
            
-        </header>
+          
         <!-- header -->
       {% block body %}
       
@@ -165,7 +173,9 @@
             </div>
         </footer>
         <!-- end of footer -->
-        <script src = "/static/js/script.js"></script>
+        <script src = "/static/js/script.js">
+            
+        </script>
         
     </body>
 </html>

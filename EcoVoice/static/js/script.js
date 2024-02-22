@@ -37,7 +37,9 @@ window.addEventListener('resize', () => {
     }, 400);
 });
 
-let subMenu = document.getElementById('subMenu');
-function toogelMenu(){
-    subMenu.classList.toggle('open-menu');
-}
+
+let subMenu = document.getElementById("subMenu");
+            console.log("hi")
+            function toggleMenu(){
+                subMenu.classList.toggle("open-menu");
+            }

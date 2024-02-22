@@ -11,6 +11,8 @@ class CustomUser(AbstractBaseUser):
     # Additional fields for complaint filing
     full_name = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=True)
+    country = models.CharField(max_length=20, blank=True)
+    
     city = models.CharField(max_length=20, blank=True)
     state = models.CharField(max_length=20, blank=True)
     zipcode = models.CharField(max_length=10, blank=True)

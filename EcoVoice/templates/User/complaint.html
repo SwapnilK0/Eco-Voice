@@ -1,64 +1,141 @@
-{% extends './base.html'%}
-{%block head%}
-{% comment %} <link rel="stylesheet" href="/static/css/complaint_style.css" /> {% endcomment %}
-<header></header>
+{% extends 'User/base.html'%}
 
+{%block head%}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    
+  }
+
+  section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .input-box {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .column {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .proof-field {
+    display: none;
+  }
+
+</style>
+</head>
 {%endblock head%}
+
 {% block body%}
 
-    <section>
-      
-      <form action="/complaint" method="post">
-        {% csrf_token %}
-        <div>
-          <label>Complain Name</label>
-          <input type="text" name="complint_name" placeholder="Enter Complain name" required />
-        </div>
-        <br>
+<body>
 
-        <div>
-          <select>
-            <option hidden>Crime type</option>
-            <option>Animal Abuse</option>
-            <option>Illegal Deforestation</option>
-            <option>Plastic Litttering</option>
-          </select>
-        </div>
-        <br>
+<section>
+  <form action="/complaint" method="post">
+    {% csrf_token %}
+    <div>
+      <label>Complain Name</label>
+      <input type="text" name="complaint_name" placeholder="Enter Complaint name" required>
+    </div>
+    <div>
+      <label>Crime Type</label>
+      <select name="crime_type">
+        <option hidden>Select Crime Type</option>
+        <option>Animal Abuse</option>
+        <option>Illegal Deforestation</option>
+        <option>Plastic Littering</option>
+      </select>
+    </div>
+    <div class="column">
+      <label>Date of Incident</label>
+      <input type="date" name="crime_date" required>
+    </div>
+    <div class="input-box address">
+      <label>Address of Incident</label>
+      <input type="text" name="address_line1" placeholder="Street Address" required>
+      <input type="text" name="address_line2" placeholder="Street Address Line 2">
+      <div class="column">
+        <select name="country" required>
+          <option hidden>Select Country</option>
+          <option>Thailand</option>
+          <option>Australia</option>
+          <option>India</option>
+          <option>Switzerland</option>
+          <option>Germany</option>
+        </select>
+        <input type="text" name="city" placeholder="City" required>
+      </div>
+      <div class="column">
+        <input type="text" name="state" placeholder="State" required>
+        <input type="number" name="zipcode" placeholder="Postal Code" required>
+      </div>
+    </div>
+    <div id="proof-container">
+      <div class="proof-field">
+        <label>Proof</label>
+        <input type="file" name="proof[]" accept="image/*" required>
+      </div>
+    </div>
+    <button type="button" id="add-proof">Add Proof</button><br>
+    <button type="submit">Submit</button>
+  </form>
+</section>
 
-        <div class="column">
-          <div>
-            <label>Date of Incident</label>
-            <input type="date" name="crime_date" placeholder="Enter birth date" required />
-          </div>
-        </div>
-<br>
-        <div class="input-box address">
-          <label>Address of Incident</label>
-          <input type="text" name="address" placeholder="Enter street address" required />
-          <input type="text" placeholder="Enter street address line 2" required />
-          <div class="column">
-            <div>
-              <select name="country">
-                <option hidden>Country</option>
-                <option>Thailand</option>
-                <option>Australia</option>
-                <option>India</option>
-                <option>Switzerland</option>
-                <option>Germany</option>
-              </select>
-            </div>
-            <input type="text" name="city" placeholder="Enter your city" required />
-          </div>
-          <div class="column">
-            <input type="text" name="state" placeholder="Enter your State" required />
-            <input type="number" name+"zipcode" placeholder="Enter postal code" required />
-          </div>
-        </div>
-        <button>Submit</button>
-      </form>
-    </section>
-    <br>
-    <br>
+<script>
+  document.getElementById('add-proof').addEventListener('click', function() {
+    const proofField = document.querySelector('.proof-field').cloneNode(true);
+    proofField.classList.remove('proof-field');
+    proofField.querySelector('input').value = '';
+    document.getElementById('proof-container').appendChild(proofField);
+  });
+</script>
 
-{%endblock body%}
+{%endblock%}

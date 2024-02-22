@@ -14,6 +14,7 @@ class CustomCharityUser(AbstractBaseUser):
     charity_id = models.CharField(max_length=15, unique=True, blank=True, null=True)
     charity_address = models.TextField(max_length=100, blank=True, null=True)
     charity_city = models.CharField(max_length=20, blank=True, null=True)
+    charity_country = models.CharField(max_length=20, blank=True, null=True)
     charity_state = models.CharField(max_length=20, blank=True, null=True)
     charity_zipcode = models.CharField(max_length=10, blank=True, null=True)
     
