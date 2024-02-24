@@ -27,7 +27,7 @@ class CustomUser(AbstractBaseUser):
 class Complaint(models.Model):
     
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, null=True, blank=True)  
-    complint_name = models.CharField(max_length=100, blank=True)
+    # complint_name = models.CharField(max_length=100, blank=True)
     crime_type = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
