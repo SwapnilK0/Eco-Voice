@@ -61,9 +61,12 @@ form{
     padding: 0.7rem 2.4rem;
     border-radius: 0.2rem;
     font-weight: 600;
-    background-color: var(--green);
+    background-color: #646665;
     color: #fff;
-    border: 1px solid var(--green);
+    border: 5px solid #494949;
+    position: relative;
+    bottom: -12rem;
+    left: 50px;
 }
 .btn:hover{
     opacity: 0.9;

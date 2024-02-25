@@ -42,7 +42,7 @@
                         </li>
                         
                         <li class = "nav-item">
-                            <a href = "events" class = "nav-link">Events</a>
+                            <a href = "events" class = "nav-link">Registor Events</a>
                         </li>
 
                         <li class = "nav-item">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </nav>
-
+<br>
         <div class="container">
             {% if messages %}
               {% for message in  messages %}
@@ -161,16 +161,14 @@
                         <li><a href = "#">Germany</a></li>
                     </ul>
                 </div>
-
-                <div class = "subscribe-form footer-item">
-                    <h2>Sign Up </h2>
-                    <h4>And become the Part of ECO-voice!</h4>
-                    <form class = "flex">
-                        <input type = "email" placeholder="Enter Email" class = "form-control">
-                        <input type = "submit" class = "btn" value = "Subscribe">
-                    </form>
-                </div>
+                
             </div>
+            {%if not request.user.is_authenticated %}
+                <div class = "subscribe-form footer-item">
+                    <a href = "signup" class="btn ">Sign Up </a>
+                    
+                </div>
+                {% endif %}
         </footer>
         <!-- end of footer -->
         <script src = "/static/js/script.js">

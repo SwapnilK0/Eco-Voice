@@ -5,14 +5,40 @@
 {%endblock head%}
 
 {% block body%}
-
+<style>
+    .create-block-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 40px;
+        cursor: pointer;
+        z-index: 999;
+    }
+    
+    .create-block-btn img {
+        width: 4rem;
+        height: 4rem;
+        
+       
+        
+    }
+    
+    .create-block-btn svg path {
+        fill: #fff;
+    }
+</style>    
         <!-- blog section -->
         <section id = "blog" class = "py-4">
             <div class = "container">
                 <div class = "title-wrap">
                     <h2 class = "sm-title">read these blog for information</h2>
                     <h3 class = "lg-title">recent blog</h3>
+                    <div class="create-block-btn">
+                        <a href = "write_blog">
+                        <img src="/static/images/plus.svg" alt="Create Blog">
+                        </a>
+                    </div>
                 </div>
+                
 
                 <div class = "blog-row">
                     <div class = "blog-item my-2 shadow">

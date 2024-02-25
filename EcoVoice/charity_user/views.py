@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import CustomCharityUser,Donation,Event,Blog,Profile
 from .utils import * 
 import uuid
+from django.contrib import messages
 
 #Login signup and logout is remaining
 
@@ -37,7 +38,7 @@ def user_logout(request) :
     # messages.success(request, ("Successfully Logout") )
     return redirect('home')
 
-
+@login_required(login_url='login')
 def home(request):
     
     return render(request,'Charity/charity_home.html')
@@ -59,11 +60,16 @@ def signup(request):
         # Extract data from the request
         email = request.POST.get('email')
         password = request.POST.get('password')
+        con_password= request.POST.get('password2')
+        
+        if(password != con_password):
+            messages.success(request, ("Password is not same") )
+            return render(request,'Charity/signup.html')
         
         # Create and save the CustomCharityUser object
         
         if AuthUser.objects.filter(username=email).exists():
-            # messages.success(request, ("User is Already Exist") )
+            messages.success(request, ("User is Already Exist") )
             return redirect('signup')
         else:
             charity_user=AuthUser.objects.create_user(username=email,password=password)
@@ -74,6 +80,10 @@ def signup(request):
                                         
             )
             send_email_token(email, p_obj.email_token)
+             
+            CustomCharityUser.objects.create(
+                user =charity_user           
+            )
        
             return HttpResponse('Verification is send successfully!')
         
@@ -101,7 +111,7 @@ def verify(request, token):
 def edit_info(request):
     if request.method == 'POST':
         # Extract data from the request
-        email = request.user.username
+        
         charity_name = request.POST.get('charity_name')
         charity_id = request.POST.get('charity_id')
         charity_address = request.POST.get('charity_address')
@@ -112,7 +122,9 @@ def edit_info(request):
         
 
         # Create and save the CustomCharityUser object
-        CustomCharityUser.objects.filter(email=email).update(
+        
+        CustomCharityUser.objects.filter(user=request.user).update(
+            user =request.user,
             charity_name=charity_name,
             charity_id=charity_id,
             charity_country = charity_country,
@@ -129,64 +141,70 @@ def edit_info(request):
     
 
 
-
+@login_required(login_url='login')
 def about(request):
     
     return render(request,'Charity/about.html')
     # return HttpResponse('here is about page')
 
-
+@login_required(login_url='login')
 def blogs(request):
     
     return render(request,'Charity/blogs.html')
 
 
 @login_required(login_url='login')
-def create_blog(request):
-    # Extract data from the request
-    author_name = request.POST.get('author_name')
-    blog_heading = request.POST.get('blog_heading')
-    blog_description = request.POST.get('blog_description')
-    uploaded_date = request.POST.get('uploaded_date')
+def write_blog(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        author_name = request.POST.get('author_name')
+        blog_heading = request.POST.get('blog_heading')
+        blog_description = request.POST.get('blog_description')
+        uploaded_date = request.POST.get('uploaded_date')
 
-    # Create and save the Blog object
-    blog = Blog.objects.create(
-        author_name=author_name,
-        blog_heading=blog_heading,
-        blog_description=blog_description,
-        uploaded_date=uploaded_date
-    )
-    return redirect('/blog')
+        # Create and save the Blog object
+        blog = Blog.objects.create(
+            author_name=author_name,
+            blog_heading=blog_heading,
+            blog_description=blog_description,
+            uploaded_date=uploaded_date
+        )
+        return render(request,'Charity/blog_Success.html')
+ 
+    return render(request,'Charity/write_blog.html')
+    
 
 
 @login_required(login_url='login')
-def create_event(request):
-    # Extract data from the request
-    event_name = request.POST.get('event_name')
-    event_id = request.POST.get('event_id')
-    event_address = request.POST.get('event_address')
-    event_city = request.POST.get('event_city')
-    event_state = request.POST.get('event_state')
-    event_host = request.POST.get('event_host')
-    event_date = request.POST.get('event_date')
-
-    # Create and save the Event object
-    event = Event.objects.create(
-        event_name=event_name,
-        event_id=event_id,
-        event_address=event_address,
-        event_city=event_city,
-        event_state=event_state,
-        event_host=event_host,
-        event_date=event_date
-    )
-    return HttpResponse('Event created successfully!')
-    
-
-def events(request):
-    
-    # return HttpResponse('Event page')  
-    return render(request,'Charity/display_event.html')
+def event_registration(request):
+    if request.method == 'POST':
+        # # Extract data from the request
+        # event_headline = request.POST.get('event_headline')
+        
+        # event_address = request.POST.get('event_address')
+        # event_city = request.POST.get('event_city')
+        # event_country = request.POST.get('event_country')
+        # event_state = request.POST.get('event_state')
+        # event_date = request.POST.get('event_date')
+        # event_zipcode = request.POST.get('event_zipcode')
+        
+        # # Create and save the Event object
+        # event = Event.objects.create(
+        #     event_headline=event_headline,
+        #     event_host =  CustomCharityUser.objects.filter(user=AuthUser).get("charity_name"),        
+        #     event_country=event_country,
+        #     event_address=event_address,
+        #     event_city=event_city,
+        #     event_state=event_state,
+            
+        #     event_date=event_date
+        # )
+        # return HttpResponse('Event created successfully!')
+        
+        return render(request,'Charity/Event_Success.html')
+ 
+    return render(request,'Charity/event_registration.html')
+        
 
 
 
@@ -194,7 +212,7 @@ def events(request):
 # def upcoming_events(request): #it will include in event view
 #     return render(request,'upcoming_events.html')
 
-
+@login_required(login_url='login')
 def news(request):
     if request.method == 'POST': # with Condition decorator
         #whenever a user is logged in then it can edit the blog
@@ -204,7 +222,7 @@ def news(request):
     
 
 
-
+@login_required(login_url='login')
 def help(request):
     #it provide some of questions and answer 
     # return render(request,'help.html')

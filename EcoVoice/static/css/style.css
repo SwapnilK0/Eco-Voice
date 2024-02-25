@@ -5,7 +5,7 @@
     --trans: all 0.3s ease-in-out;
 }
 .navbar{
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     background-color: white;
@@ -130,6 +130,9 @@
     overflow: hidden;
     transition : max-height 0.5s;
 
+}
+.sub-menu-wrap.open-menu1{
+    max-height: 400px;
 }
 
 .sub-menu-wrap.open-menu{
@@ -551,7 +554,8 @@ footer{
     background-color: var(--dark);
     color: #fff;
     text-align: center;
-    position: sticky;
+    position: relative;
+    bottom: 0;
 }
 footer::before{
     content: "";
@@ -949,5 +953,7 @@ img.edit-info{
     width: 50%;
     align-items: center;
 }
+
+
 
 

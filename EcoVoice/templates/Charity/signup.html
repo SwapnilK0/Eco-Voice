@@ -1,27 +1,62 @@
-{%extends './base.html'%}
+{% extends 'Charity/base.html'%}
+
+{%block head%}
+<link rel = "stylesheet" href = "/static/css/complaint_style.css">
+        
+{%endblock%}
 {%block body%}
-  <h2>Charity User Signup</h2>
-  <form action="signup" method="post">
+<div class="formbold-main-wrapper">
+
+
+
+  <!-- Author: FormBold Team -->
+  <!-- Learn More: https://formbold.com -->
+  <div class="formbold-form-wrapper">
+    <h1>Sign Up</h1>
+    <hr>
+    <form action="signup" method="POST">
+      <img src="/static/images/Sign up.svg">
     {% csrf_token %}
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
-    {% comment %} <label for="charity_name">Charity Name:</label><br>
-    <input type="text" id="charity_name" name="charity_name" required><br>
-    <label for="charity_id">Charity ID:</label><br>
-    <input type="text" id="charity_id" name="charity_id" required><br>
-    <label for="charity_address">Charity Address:</label><br>
-    <textarea id="charity_address" name="charity_address" required></textarea><br>
-    <label for="charity_city">Charity City:</label><br>
-    <input type="text" id="charity_city" name="charity_city" required><br>
-    <label for="charity_state">Charity State:</label><br>
-    <input type="text" id="charity_state" name="charity_state" required><br>
-    <label for="charity_zipcode">Charity Zipcode:</label><br>
-    <input type="text" id="charity_zipcode" name="charity_zipcode" required><br>
-     {% endcomment %}
-     <label for="password">Password:</label><br>
-     <input type="password" id="password" name="password" required><br>
-     
-    
-    <button type="submit">Sign Up</button>
-  </form>
+      <div class="formbold-mb-3">
+        <label for="country" class="formbold-form-label"> Email </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          
+          class="formbold-form-input"
+        />
+      </div>
+
+      <div class="formbold-mb-3">
+        <label for="password" class="formbold-form-label"> Password </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          
+          class="formbold-form-input"
+        />
+      </div>
+
+
+      <div class="formbold-mb-3">
+        <label for="password2" class="formbold-form-label"> Confirm Password </label>
+        <input
+          type="password"
+          name="password2"
+          id="password2"
+          
+          class="formbold-form-input"
+        />
+      </div>
+      
+      <center><button class="formbold-btn">Submit</button></center>
+    </form>
+  <br>
+  <a href="/login">Login</a> 
+  </div>
+  
+</div>
+
 {%endblock%}

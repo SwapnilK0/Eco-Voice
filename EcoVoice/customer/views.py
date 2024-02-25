@@ -4,7 +4,7 @@ from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.contrib.auth.decorators import login_required
 from customer.models import *
-from charity_user.views import create_blog
+
 from charity_user.models import *
 from charity_user.utils import * 
 from .manager import *
@@ -37,29 +37,64 @@ def user_logout(request) :
     # messages.success(request, ("Successfully Logout") )
     return redirect('/home')
 
+def signup(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        con_password= request.POST.get('password2')
+        
+        if(password != con_password):
+            messages.success(request, ("Password is not same") )
+            return render(request,'User/signup.html')
+        
+        # Create and save the CustomCharityUser object
+        
+        if AuthUser.objects.filter(username=email).exists():
+            messages.success(request, ("User is Already Exist") )
+            return redirect('signup')
+        else:
+            charity_user=AuthUser.objects.create_user(username=email,password=password)
+            
+            p_obj = Profile.objects.create(
+                user=charity_user,
+                email_token = str(uuid.uuid4())
+                                        
+            )
+            send_email_token(email, p_obj.email_token)
+             
+            CustomUser.objects.create(
+                user =charity_user           
+            )
+       
+            return HttpResponse('Verification is send successfully!')
+        
+    else:
+        return render(request,'Charity/signup.html')
 
 
 # @login_required(login_url='login')
 def edit_info(request):
     if request.method == 'POST':
         # Extract data from the request
-        email = request.user.username
-        charity_name = request.POST.get('charity_name')
-        charity_id = request.POST.get('charity_id')
-        charity_address = request.POST.get('charity_address')
-        charity_city = request.POST.get('charity_city')
-        charity_state = request.POST.get('charity_state')
-        charity_zipcode = request.POST.get('charity_zipcode')
+        
+        full_name = request.POST.get('full_name')
+        phone_number = request.POST.get('phone_number')
+        country = request.POST.get('country')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zipcode = request.POST.get('zipcode')
         
 
         # Create and save the CustomCharityUser object
-        CustomCharityUser.objects.filter(email=email).update(
-            charity_name=charity_name,
-            charity_id=charity_id,
-            charity_address=charity_address,
-            charity_city=charity_city,
-            charity_state=charity_state,
-            charity_zipcode=charity_zipcode
+        CustomUser.objects.filter(user=request.user).update(
+            user =request.user,
+            full_name=full_name,
+            phone_number=phone_number,
+            country = country,
+            city=city,
+            state=state,
+            zipcode=zipcode
         )
         return HttpResponse('Charity user info edited successfully!') 
     # return render(request,'edit_info.html', {details:'details'})
@@ -101,6 +136,7 @@ def complaint(request):
         complaint = Complaint(
             complint_name=complint_name,
             user = request.user,
+            is_anonymous = False,
             crime_type=crime_type,
             address=address,
             city=city,
@@ -113,18 +149,51 @@ def complaint(request):
         )
         complaint.save()
         
-    return render(request,'User/complaint.html')
+    return render(request,'User/complaint.html',{"string":"Complaint"})
     # return HttpResponse('File a Compliant here')
 
 
 
 @login_required(login_url='/login')
-def ananomuscomplaint(request):
+def anonymouscomplaint(request):
     if request.method == 'POST':
-        complaint(request)
-    
-    # return HttpResponse('File a Ananomus Compliant here') 
-    return render(request,'User/complaint.html')
+        # data to write in the database
+        # Here er use Ai model for image classification and store it in database
+        
+        
+        crime_type = request.POST.get('crime_type')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        country = request.POST.get('country')
+        state = request.POST.get('state')
+        zipcode = request.POST.get('zipcode')
+        crime_date = request.POST.get('crime_date')
+        description = request.POST.get('description')
+        
+
+        # Create and save the CustomUser object if necessary
+        # (Assuming the user is logged in and their ID is available in request.user.id)
+        
+        
+
+        # Create and save the Complaint object
+        complaint = Complaint(
+           
+            user = request.user,
+            is_anonymous = True,
+            crime_type=crime_type,
+            address=address,
+            city=city,
+            country=country,
+            state=state,
+            zipcode=zipcode,
+            crime_date=crime_date,
+            description=description,
+            status="Under checking"
+        )
+        complaint.save()
+        
+    return render(request,'User/complaint.html',{"string":"Anonymous Complaint"})
 
 def about_us(request):
     return render(request,'User/about.html')
@@ -136,10 +205,23 @@ def blogs(request):
 
 @login_required(login_url='/login')
 def write_blog(request):
-    if request.method == 'POST': # with Condition decorator
-        #whenever a user is logged in then it can edit the blog
-        create_blog(request)
-    return render(request,'User/write_bolg.html')
+    
+    if request.method == 'POST':
+        # Extract data from the request
+        author_name = request.POST.get('author_name')
+        blog_heading = request.POST.get('blog_heading')
+        blog_description = request.POST.get('blog_description')
+        uploaded_date = request.POST.get('uploaded_date')
+
+        # Create and save the Blog object
+        blog = Blog.objects.create(
+            author_name=author_name,
+            blog_heading=blog_heading,
+            blog_description=blog_description,
+            uploaded_date=uploaded_date
+        )
+        return redirect('/blog')
+    return render(request,'User/write_blog.html')
         
     
 def events(request):

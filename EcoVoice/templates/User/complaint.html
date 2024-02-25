@@ -1,6 +1,11 @@
 {% extends 'User/base.html'%}
 
 {%block head%}
+<link rel = "stylesheet" href = "/static/css/complaint_style.css">
+        
+{% endblock%}
+
+{%block body%}
 <div class="formbold-main-wrapper">
 
 
@@ -8,7 +13,8 @@
   <!-- Author: FormBold Team -->
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
-    <h1>File Complaint</h1>
+    
+    <h1>File {{string}}</h1>
     <svg class="formbold-img" width="448" height="280" viewBox="0 0 448 280" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M212.928 111.419C213.11 89.2347 214.014 66.8355 215.641 44.222C215.668 43.7731 215.701 43.3309 215.735 42.882C216.595 31.1095 217.647 19.2947 218.891 7.43735V7.37034C218.89 5.41596 218.111 3.54197 216.726 2.16001C215.341 0.778061 213.463 0.00116625 211.505 0H13.4214C11.4694 0.00382696 9.598 0.776979 8.21462 2.15112C6.83124 3.52526 6.04792 5.38911 6.0352 7.33683C4.31623 23.6655 2.96881 39.9137 1.99294 56.0816C1.95265 56.6109 1.9258 57.1335 1.89894 57.6628C1.41548 65.6563 1.03051 73.6297 0.744014 81.5829C0.72387 82.052 0.703721 82.521 0.697006 82.99C-1.13623 131.788 0.648037 180.655 6.0352 229.191C6.04931 231.137 6.8333 233 8.21657 234.372C9.59984 235.745 11.4705 236.517 13.4214 236.521H211.505C213.463 236.52 215.341 235.743 216.726 234.361C218.111 232.979 218.89 231.105 218.891 229.15V229.077C217.917 220.454 217.062 211.774 216.326 203.039C216.219 201.76 216.113 200.48 216.01 199.2C215.5 192.909 215.055 186.592 214.674 180.252C214.594 178.972 214.52 177.692 214.453 176.412C213.734 163.722 213.264 150.933 213.042 138.046C213.016 136.767 212.995 135.494 212.975 134.207C212.895 127.916 212.87 121.599 212.901 115.259C212.901 113.979 212.908 112.699 212.928 111.419Z" fill="#F0F0F0"/>
     <path d="M272.609 50.2532C272.607 48.2988 271.829 46.4248 270.444 45.0428C269.059 43.6609 267.181 42.884 265.222 42.8828H67.139C65.187 42.8866 63.3156 43.6598 61.9322 45.0339C60.5488 46.4081 59.7655 48.2719 59.7528 50.2196C53.065 113.852 51.957 176.36 56.4357 236.522C56.9796 243.966 57.6153 251.372 58.3427 258.74C58.7322 262.686 59.1462 266.622 59.5849 270.546C59.6386 271.055 59.6924 271.564 59.7528 272.074C59.7669 274.02 60.5509 275.883 61.9342 277.255C63.3174 278.628 65.1881 279.4 67.139 279.404H265.222C267.181 279.403 269.059 278.626 270.444 277.244C271.829 275.862 272.607 273.988 272.609 272.033V271.96C264.598 201.09 264.598 126.523 272.609 50.3202V50.2532Z" fill="white"/>
@@ -50,11 +56,13 @@
     <path d="M402.078 278.983C402.079 279.088 402.058 279.192 402.018 279.29C401.979 279.387 401.92 279.475 401.846 279.55C401.771 279.625 401.683 279.684 401.586 279.725C401.489 279.765 401.385 279.786 401.279 279.787H264.769C264.557 279.787 264.353 279.703 264.202 279.552C264.052 279.402 263.967 279.199 263.967 278.986C263.967 278.774 264.052 278.57 264.202 278.42C264.353 278.27 264.557 278.186 264.769 278.186H401.279C401.491 278.186 401.694 278.27 401.844 278.42C401.993 278.569 402.078 278.772 402.078 278.983Z" fill="#CCCCCC"/>
     <path d="M370.112 79.8098L365.304 78.2376L358.667 71.0785L355.24 67.3789L353.081 65.0558L352.162 64.0611L343.475 60.9932L337.607 58.9176L334.019 62.9592L332.309 64.8854L335.737 71.4336L337.815 75.4136L342.336 84.0445L352.502 94.4739L355.03 97.0669L356.478 98.5599L356.489 98.5729L356.687 98.7706L375.908 94.0276L376.511 93.8792L376.289 92.647L376.214 92.2007C376.176 91.9776 376.13 91.7561 376.084 91.5347C375.183 87.2127 373.136 83.194 370.112 79.8098Z" fill="#6A64F1"/>
     </svg>
-         
-    <form action="https://formbold.com/s/FORM_ID" method="POST">
-      
-
-      
+        
+    {%if string == "Complaint"%}
+    <form action="complaint" method="POST">
+    {%else %}
+    <form action="anonymouscomplaint" method="POST">
+    {%endif%}
+    {% csrf_token %}
       <div class="formbold-mb-3">
         <label class="formbold-form-label">The issue I'm reporting involves:</label>
 
@@ -67,7 +75,7 @@
       </div>
 
       <div class="formbold-mb-3">
-        <label for="crime_date" class="formbold-form-label"> Date of Birth </label>
+        <label for="crime_date" class="formbold-form-label"> Date of Crime </label>
         <input type="date" name="crime_date" id="crime_date" class="formbold-form-input" />
       </div>
 
@@ -124,7 +132,7 @@
             type="text"
             name="zipcode"
             id="zipcode"
-            placeholder="ex:8976"
+            placeholder="zipcode"
             class="formbold-form-input"
           />
         </div>
@@ -189,184 +197,5 @@
     </form>
   </div>
 </div>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Inter', sans-serif;
-  }
-  .formbold-mb-3 {
-    margin-bottom: 15px;
-  }
-  .formbold-relative {
-    position: relative;
-  }
-  .formbold-opacity-0 {
-    opacity: 0;
-  }
-  .formbold-stroke-current {
-    stroke: #ffffff;
-    z-index: 999;
-  }
-  #supportCheckbox:checked ~ div span {
-    opacity: 1;
-  }
-  #supportCheckbox:checked ~ div {
-    background: #6a64f1;
-    border-color: #6a64f1;
-  }
 
-  .formbold-main-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 48px;
-  }
-
-  .formbold-form-wrapper {
-    margin: 0 auto;
-    max-width: 570px;
-    width: 100%;
-    background: white;
-    padding: 40px;
-  }
-
-  .formbold-img {
-    display: block;
-    margin: 0 auto 45px;
-  }
-
-  .formbold-input-wrapp > div {
-    display: flex;
-    gap: 20px;
-  }
-
-  .formbold-input-flex {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 15px;
-  }
-  .formbold-input-flex > div {
-    width: 50%;
-  }
-  .formbold-form-input {
-    width: 100%;
-    padding: 13px 22px;
-    border-radius: 5px;
-    border: 1px solid #dde3ec;
-    background: #ffffff;
-    font-weight: 500;
-    font-size: 16px;
-    color: #536387;
-    outline: none;
-    resize: none;
-  }
-  .formbold-form-input::placeholder,
-  select.formbold-form-input,
-  .formbold-form-input[type='date']::-webkit-datetime-edit-text,
-  .formbold-form-input[type='date']::-webkit-datetime-edit-month-field,
-  .formbold-form-input[type='date']::-webkit-datetime-edit-day-field,
-  .formbold-form-input[type='date']::-webkit-datetime-edit-year-field {
-    color: rgba(83, 99, 135, 0.5);
-  }
-
-  .formbold-form-input:focus {
-    border-color: #6a64f1;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-  }
-  .formbold-form-label {
-    color: #536387;
-    font-size: 14px;
-    line-height: 24px;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .formbold-checkbox-label {
-    display: flex;
-    cursor: pointer;
-    user-select: none;
-    font-size: 16px;
-    line-height: 24px;
-    color: #536387;
-  }
-  .formbold-checkbox-label a {
-    margin-left: 5px;
-    color: #6a64f1;
-  }
-  .formbold-input-checkbox {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-  .formbold-checkbox-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    margin-right: 16px;
-    margin-top: 2px;
-    border: 0.7px solid #dde3ec;
-    border-radius: 3px;
-  }
-
-  .formbold-form-file {
-    padding: 12px;
-    font-size: 14px;
-    line-height: 24px;
-    color: rgba(83, 99, 135, 0.5);
-  }
-  .formbold-form-file::-webkit-file-upload-button {
-    display: none;
-  }
-  .formbold-form-file:before {
-    content: 'Upload';
-    display: inline-block;
-    background: #EEEEEE;
-    border: 0.5px solid #E7E7E7;
-    border-radius: 3px;
-    padding: 3px 12px;
-    outline: none;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    cursor: pointer;
-    color: #637381;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    margin-right: 10px;
-  }
-
-  .formbold-btn {
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 14px 25px;
-    border: none;
-    font-weight: 500;
-    background-color: #6a64f1;
-    color: white;
-    cursor: pointer;
-    margin-top: 25px;
-  }
-  .formbold-btn:hover {
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .formbold-w-45 {
-    width: 45%;
-  }
-
-  
-</style>
 {%endblock%}

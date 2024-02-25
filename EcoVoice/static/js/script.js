@@ -39,7 +39,11 @@ window.addEventListener('resize', () => {
 
 
 let subMenu = document.getElementById("subMenu");
-            console.log("hi")
+            
             function toggleMenu(){
                 subMenu.classList.toggle("open-menu");
+            }
+        
+            function toggleMenu2(){
+                subMenu.classList.toggle("open-menu1");
             }

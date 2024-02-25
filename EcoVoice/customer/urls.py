@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('home', home, name='home'),
     path('complaint', complaint, name='complaint'),   
-    path('ananomuscomplaint', ananomuscomplaint, name='ananomuscomplaint'),   
+    path('anonymouscomplaint', anonymouscomplaint, name='anonymouscomplaint'),   
     path('blogs', blogs, name='blogs'),
     path('write_blog', write_blog, name='write_blog'),
     path('about', about_us, name='about_us'),
