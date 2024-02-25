@@ -67,8 +67,8 @@ def signup(request):
                 user =charity_user           
             )
        
-            return HttpResponse('Verification is send successfully!')
-        
+            return render(request,'/User/succsses.html')
+
     else:
         return render(request,'Charity/signup.html')
 
@@ -96,7 +96,8 @@ def edit_info(request):
             state=state,
             zipcode=zipcode
         )
-        return HttpResponse('Charity user info edited successfully!') 
+        return render(request,'/User/succsses.html')
+
     # return render(request,'edit_info.html', {details:'details'})
     
     return render(request,'User\edit_info.html')
@@ -148,6 +149,7 @@ def complaint(request):
             status="Under checking"
         )
         complaint.save()
+        return render(request,'/User/succsses.html')
         
     return render(request,'User/complaint.html',{"string":"Complaint"})
     # return HttpResponse('File a Compliant here')
@@ -192,6 +194,8 @@ def anonymouscomplaint(request):
             status="Under checking"
         )
         complaint.save()
+        return render(request,'/User/succsses.html')
+        
         
     return render(request,'User/complaint.html',{"string":"Anonymous Complaint"})
 
@@ -220,7 +224,8 @@ def write_blog(request):
             blog_description=blog_description,
             uploaded_date=uploaded_date
         )
-        return redirect('/blog')
+        return render(request,'/User/succsses.html')
+
     return render(request,'User/write_blog.html')
         
     
@@ -232,14 +237,7 @@ def events(request):
 #     return render(request,'upcoming_events.html')
 
 
-@login_required(login_url='/login')
-def events_registrations(request):
-    if request.method == 'POST': # with Condition decorator
-        # data to write in the database
-        # Here er use Ai model for image classification and store it in database
-            print('Registration of event ')
-     
-    return render(request,'events_registration.html')
+
     
 def news(request):
     return render(request,'news.html')
@@ -273,8 +271,9 @@ def donation(request): # with Condition decorator
             amount=amount,
             date=date,
             transaction_method=transaction_method
-        )
-        return HttpResponse('Donation recorded successfully!')
+        )            
+        return render(request,'/User/succsses.html')
+
        
     
     return render(request,'donation.html')

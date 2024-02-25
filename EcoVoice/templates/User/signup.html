@@ -5,6 +5,18 @@
         
 {%endblock%}
 {%block body%}
+
+<style>
+  .formcss{
+    
+    display: inline;
+    
+    justify-items: center;
+  }
+  .formcss img{
+    width: 70%;
+  }
+</style>
 <div class="formbold-main-wrapper">
 
 
@@ -15,7 +27,7 @@
     <h1>Sign Up</h1>
     
 
-    <form action="signup" method="POST">
+    <form action="signup" method="POST" class="formcss">
       <center><img src="/static/images/Sign up.svg"></center>
     {% csrf_token %}
       <div class="formbold-mb-3">
@@ -54,7 +66,7 @@
       <center><button class="formbold-btn">Submit</button></center>
     </form>
   <br>
-  <a href="/login">Login</a> 
+
   </div>
   
 </div>

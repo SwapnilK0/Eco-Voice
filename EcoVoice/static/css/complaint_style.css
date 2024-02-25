@@ -40,7 +40,7 @@
     margin: 0 auto;
     max-width: 570px;
     width: 100%;
-    background: white;
+    background-color:#e2e2e252;
     padding: 40px;
   }
 
@@ -70,7 +70,7 @@
     background: #ffffff;
     font-weight: 500;
     font-size: 16px;
-    color: #536387;
+    color: black;
     outline: none;
     resize: none;
   }
@@ -84,11 +84,11 @@
   }
 
   .formbold-form-input:focus {
-    border-color: #6a64f1;
+    border-color: #6b6b6b;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
   }
   .formbold-form-label {
-    color: #536387;
+    color: #000000;
     font-size: 14px;
     line-height: 24px;
     display: block;
@@ -178,7 +178,7 @@
 
   .formbold-textarea {
     text-align: left;
-    width: 400%;
+    width: 370%;
     padding: 13px 22px;
     border-radius: 5px;
     border: 1px solid #dde3ec;

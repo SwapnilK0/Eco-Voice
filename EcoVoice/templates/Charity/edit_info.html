@@ -12,7 +12,7 @@
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-   <center><img src="/static/images/edit_info.png" class="edit-info"></center>
+   <center><img src="/static/images/edit_info1.png" class="edit-info"></center>
 
     <form action="edit_info" method="POST">
       {% csrf_token %}
@@ -30,6 +30,7 @@
             type="text"
             name="charity_name"
             id="charity_name"
+            placeholder="EcoVoice"
             class="formbold-form-input"
           />
         </div>
@@ -39,6 +40,7 @@
             type="text"
             name="charity_id"
             id="charity_id"
+            placeholder="11212"
             class="formbold-form-input"
           />
         </div>
@@ -55,6 +57,7 @@
           name="charity_address"
           id="charity_address"
           class="formbold-form-input"
+          placeholder="Nashik, Maharashtra, India"
           required
         />
       </div>
@@ -68,15 +71,18 @@
             name="charity_state"
             id="charity_state"
             class="formbold-form-input"
+            placeholder="Maharashtra"
           />
         </div>
         <div>
-          <label for="charity_country" class="formbold-form-label"> charity_country </label>
+          <label for="charity_country" class="formbold-form-label">  Country </label>
           <input
             type="text"
             name="charity_country"
             id="charity_country"
             class="formbold-form-input"
+            
+          placeholder="India"
           />
         </div>
       </div>
@@ -89,11 +95,13 @@
             name="charity_zipcode"
             id="charity_zipcode"
             class="formbold-form-input"
+            
+          placeholder="422012"
           />
         </div>
         
       </div>
-
+{% comment %} 
       <div class="formbold-checkbox-wrapper">
         <label for="supportCheckbox" class="formbold-checkbox-label">
           <div class="formbold-relative">
@@ -122,7 +130,7 @@
           I agree to the defined
           <a href="terms"> terms, conditions, and policies</a>
         </label>
-      </div>
+      </div> {% endcomment %}
 
       <button class="formbold-btn">Update Profile</button>
     </form>

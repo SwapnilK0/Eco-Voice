@@ -1,5 +1,6 @@
 html, body{
     font-family: 'Open Sans', sans-serif;
+    background-color: #aabfae;
 }
 h1, h2, h3, h4, h5, h6{
     font-family: 'Raleway', sans-serif;
@@ -103,7 +104,7 @@ img{
 }
 .sm-title{
     display: block;
-    color: #787878;
+    color:black;
     font-weight: 300;
     font-size: 1.2rem;
     padding-bottom: 1rem;

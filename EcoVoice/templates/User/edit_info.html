@@ -14,7 +14,7 @@
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-   <center><img src="/static/images/edit_info.png" class="edit-info"></center>
+   <center><img src="/static/images/edit_info1.png" class="edit-info"></center>
 
     <form action="edit_info" method="POST">
       {% csrf_token %}
@@ -32,6 +32,7 @@
             type="text"
             name="full_name"
             id="full_name"
+            placeholder="EcoVoice"
             class="formbold-form-input"
           />
         </div>
@@ -43,6 +44,7 @@
             type="text"
             name="phone_number"
             id="phone_number"
+            placeholder="91xxxxxx11"
             class="formbold-form-input"
           />
         </div>
@@ -58,6 +60,7 @@
             type="text"
             name="country"
             id="country"
+            placeholder="India"
             class="formbold-form-input"
           />
         </div>
@@ -68,6 +71,7 @@
             type="text"
             name="state"
             id="state"
+            placeholder="Maharashtra"
             class="formbold-form-input"
           />
         </div>
@@ -82,6 +86,7 @@
             name="city"
             id="city"
             class="formbold-form-input"
+            placeholder="Nashik"
           />
         </div>
         
@@ -91,12 +96,13 @@
             type="text"
             name="zipcode"
             id="zipcode"
+            placeholder="422012"
             class="formbold-form-input"
           />
         </div>
         
       </div>
-
+{% comment %} 
       <div class="formbold-checkbox-wrapper">
         <label for="supportCheckbox" class="formbold-checkbox-label">
           <div class="formbold-relative">
@@ -125,7 +131,7 @@
           I agree to the defined
           <a href="#"> terms, conditions, and policies</a>
         </label>
-      </div>
+      </div> {% endcomment %}
 
       <button class="formbold-btn">Update Profile</button>
     </form>

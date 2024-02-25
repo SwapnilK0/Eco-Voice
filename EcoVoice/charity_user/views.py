@@ -70,7 +70,7 @@ def signup(request):
         
         if AuthUser.objects.filter(username=email).exists():
             messages.success(request, ("User is Already Exist") )
-            return redirect('signup')
+            return redirect('/signup')
         else:
             charity_user=AuthUser.objects.create_user(username=email,password=password)
             
@@ -133,7 +133,8 @@ def edit_info(request):
             charity_state=charity_state,
             charity_zipcode=charity_zipcode
         )
-        return HttpResponse('Charity user info edited successfully!') 
+        return render(request,'Charity/succsses.html')
+
     # return render(request,'edit_info.html', {details:'details'})
     
     return render(request,'Charity/edit_info.html')
@@ -169,7 +170,7 @@ def write_blog(request):
             blog_description=blog_description,
             uploaded_date=uploaded_date
         )
-        return render(request,'Charity/blog_Success.html')
+        return render(request,'Charity/succsses.html')
  
     return render(request,'Charity/write_blog.html')
     
