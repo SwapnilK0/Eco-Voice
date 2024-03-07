@@ -21,10 +21,9 @@ To get started with EcoVoice, follow these steps:
 
 ## Technologies Used
 
-- Flask: Web framework for building the application backend.
+- Django: Web framework for building the application backend.
 - TensorFlow: Machine learning framework for advanced validation.
 - Google Cloud Platform: Cloud services for data storage, processing, and authentication.
-- Gemini API: Integration for accessing and manipulating data related to environmental crime reporting.
 - HTML/CSS/JavaScript: Frontend development for user interactions and interface design.
 
 ## Contributing
