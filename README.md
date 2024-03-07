@@ -15,15 +15,15 @@ Welcome to EcoVoice, your platform for environmental advocacy and reporting. Thi
 To get started with EcoVoice, follow these steps:
 
 1. Clone the repository to your local machine.
-2. Install the necessary dependencies.
-3. Configure the environment variables for authentication, database connection, and other settings.
-4. Run the application and start reporting environmental crimes or managing complaints as a charity user.
+2. Install Django using `pip install django`.
+3. Install TensorFlow using `pip install tensorflow`.
+4. Configure the environment variables for authentication, database connection, and other settings.
+5. Run the application and start reporting environmental crimes or managing complaints as a charity user.
 
 ## Technologies Used
 
 - Django: Web framework for building the application backend.
 - TensorFlow: Machine learning framework for advanced validation.
-- Google Cloud Platform: Cloud services for data storage, processing, and authentication.
 - HTML/CSS/JavaScript: Frontend development for user interactions and interface design.
 
 ## Contributing
