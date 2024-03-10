@@ -23,8 +23,6 @@ EcoVoice is a comprehensive environmental advocacy and reporting platform aimed 
 
 - **Backend**: Django
 - **Machine Learning**: TensorFlow
-- **Cloud Services**: Google Cloud Platform
-- **API Integration**: Gemini API
 - **Frontend**: HTML/CSS/JavaScript
 
 ## Installation
